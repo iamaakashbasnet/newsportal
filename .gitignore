@@ -1,0 +1,14 @@
+# Vscode / Inteli config
+.vscode
+.idea
+
+# Misc python
+*.pyc
+__pycache__
+migrations
+
+# Database
+db.sqlite3
+
+# Uploaded files
+/media
