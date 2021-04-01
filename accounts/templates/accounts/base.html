@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'dist/bundle.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">NewsPortal</a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto">
+            {% if request.user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img width="30" height="30" class="rounded" src="{{ request.user.avatar.url }}" />
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <li><a class="dropdown-item" href="#">{{ request.user.first_name }} {{ request.user.last_name }}</a></li>
+                  <li><a class="dropdown-item" href="#">Settings</a></li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </li>
+                </ul>
+              </li>
+            {% endif %}
+            <button class="btn" id="menu-toggle">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div class="bg-dark border-right" id="sidebar-wrapper">
+        <div class="list-group list-group-flush">
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="list-group-item bg-dark text-white sidebar-item">
+              Dashboard</a
+            >
+            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
+              >Manage Category</a
+            >
+            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
+              >Manage News</a
+            >
+            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
+              >Manage Users</a
+            >
+            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
+              >Trash</a
+            >
+          {% else %}
+            <a href="{% url 'login' %}" class="list-group-item bg-dark text-white sidebar-item">
+              Login</a
+            >
+          {% endif %}
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+      <!-- Page Content -->
+      <div id="page-content-wrapper" class="mt-2">
+        <div class="container-fluid">
+          {% block login %}{% endblock login %}
+          {% block dashboard %}{% endblock dashboard %}
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <script src="{% static 'dist/bundle.js' %}"></script>
+    {% block extrajs %}{% endblock extrajs %}
+  </body>
+</html>

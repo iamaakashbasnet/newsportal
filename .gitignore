@@ -9,3 +9,6 @@ migrations
 
 # Database
 db.sqlite3
+
+# NPM
+node_modules
