@@ -73,11 +73,71 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
 
 # News ==============================
 
-def news(request):
-    return render(request, 'accounts/news-manager/news.html')
+class NewsListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'accounts/news-manager/news.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Post.objects.filter(deleted=False)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = 'News'
+        return data
+
+
+class NewsCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'desc', 'tags']
+    template_name = 'accounts/news-manager/add_news.html'
+    success_url = reverse_lazy('manage-news')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = 'Add News'
+        return data
+
+
+class NewsUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['title', 'desc', 'tags']
+    template_name = 'accounts/news-manager/update_news.html'
+    success_url = reverse_lazy('manage-news')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = 'Update News'
+        return data
+
+
+class NewsPermDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('manage-news')
+
+
+@login_required
+def news_delete_view(request, pk):
+    post = Post.objects.get(pk=pk)
+    post.deleted = True
+    post.save()
+
+    return redirect('manage-news')
+
+
+@login_required
+def news_restore_view(request, pk):
+    post = Post.objects.get(pk=pk)
+    post.deleted = False
+    post.save()
+
+    return redirect('manage-news')
 
 
 # Trash ==============================
 
 def trash(request):
-    return render(request, 'accounts/trash/trash.html')
+    context = {
+        'posts': Post.objects.filter(deleted=True)
+    }
+    return render(request, 'accounts/trash/trash.html', context)

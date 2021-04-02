@@ -2,4 +2,38 @@
 
 {% block dashboard %}
     <h1>Trash</h1>
+<div class="row mt-3">
+    <div class="col-12">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>News Title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if posts %}
+                    {% for post in posts %}
+                        <tr>
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.title }}</td>
+                            <td class="d-block d-md-flex">
+                                <a class="btn btn-primary btn-sm" href="{% url 'restore-news' post.pk %}">Restore</a>
+                                <form method="POST" action="{% url 'delete-news-perm' post.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" href="{% url 'delete-category' post.pk %}">Delete Permanently</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center">Trash Empty</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock dashboard %}

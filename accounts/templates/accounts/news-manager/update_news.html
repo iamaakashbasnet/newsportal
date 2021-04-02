@@ -1,0 +1,21 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block dashboard %}
+    <h1>Update News</h1>
+
+    <div class="row">
+        <div class="col-12">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-primary" type="submit">Update News</button>
+                </div>
+                <div class="d-grid gap-2 mt-3">
+                    <a href="{% url 'manage-news' %}" class="btn btn-danger">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock dashboard %}

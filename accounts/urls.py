@@ -23,7 +23,22 @@ urlpatterns = [
     path('dashboard/manage-category/<int:pk>/delete/',
          views.CategoryDeleteView.as_view(), name='delete-category'),
 
-    path('dashboard/manage-news/', views.news, name='manage-news'),
+    path('dashboard/manage-news/', views.NewsListView.as_view(), name='manage-news'),
+
+    path('dashboard/manage-news/add/',
+         views.NewsCreateView.as_view(), name='add-news'),
+
+    path('dashboard/manage-news/<int:pk>/update/',
+         views.NewsUpdateView.as_view(), name='update-news'),
+
+    path('dashboard/manage-news/<int:pk>/delete/',
+         views.news_delete_view, name='delete-news'),
+
+    path('dashboard/manage-news/<int:pk>/restore/',
+         views.news_restore_view, name='restore-news'),
+
+    path('dashboard/manage-news/<int:pk>/delete-news-perm/',
+         views.NewsPermDeleteView.as_view(), name='delete-news-perm'),
 
     path('dashboard/trash/', views.trash, name='trash')
 ]
