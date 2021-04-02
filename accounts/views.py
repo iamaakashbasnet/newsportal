@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,8 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from taggit.models import Tag
-from posts.models import Post
+from posts.models import Post, ViewCounter
+from datetime import datetime
 
 
 def admin(request):
@@ -23,9 +25,12 @@ def admin(request):
 def dashboard(request):
     context = {
         'title': 'Dashboard',
-        'total_news': Post.objects.all().count(),
-        'total_categories': Tag.objects.all().count()
+        'total_news': Post.objects.count(),
+        'total_categories': Tag.objects.count(),
+        'total_views': ViewCounter.objects.get(day=int(datetime.now().strftime('%d'))).views,
+        'views_list': json.dumps([i.views for i in ViewCounter.objects.all()])
     }
+
     return render(request, 'accounts/dashboard.html', context)
 
 

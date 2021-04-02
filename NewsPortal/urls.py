@@ -23,6 +23,7 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('sudo/', admin.site.urls),
     path('admin/', include('accounts.urls')),
+    path('views-manager/', include('posts.urls')),
 ]
 
 if settings.DEBUG:

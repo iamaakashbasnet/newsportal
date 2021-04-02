@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from taggit.managers import TaggableManager
 
 
@@ -15,3 +16,12 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class ViewCounter(models.Model):
+    day = models.IntegerField(unique=True, validators=[MinValueValidator(1),
+                                                       MaxValueValidator(30)])
+    views = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f'Day {self.day} : {self.views} views'

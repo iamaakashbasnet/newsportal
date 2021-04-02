@@ -18,19 +18,25 @@
                 </tr>
             </thead>
             <tbody>
-                {% for post in posts %}
+                {% if posts %}
+                    {% for post in posts %}
+                        <tr>
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.title }}</td>
+                            <td class="d-block d-md-flex">
+                                <a class="btn btn-primary btn-sm" href="{% url 'update-news' post.pk %}">Edit</a>
+                                <form method="POST" action="{% url 'delete-news' post.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
                     <tr>
-                        <td>{{ post.id }}</td>
-                        <td>{{ post.title }}</td>
-                        <td class="d-block d-md-flex">
-                            <a class="btn btn-primary btn-sm" href="{% url 'update-news' post.pk %}">Edit</a>
-                            <form method="POST" action="{% url 'delete-news' post.pk %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
+                        <td colspan="3" class="text-center">No News</td>
                     </tr>
-                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>

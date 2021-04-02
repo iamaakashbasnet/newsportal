@@ -29,8 +29,8 @@
         <div class="card bg-dark text-white text-center p-3">
             <figure class="mb-0">
                 <blockquote class="blockquote">
-                <p>Daily Visits</p>
-                <small>2050</small>
+                <p>Today's visits</p>
+                <small>{{ total_views }}</small>
                 </blockquote>
             </figure>
         </div>
@@ -58,10 +58,10 @@
     new Chart(document.getElementById('line-chart'), {
         type: 'line',
         data: {
-            labels: ['Day 1', 'Day 5', 'Day 10', 'Day 15', 'Day 20', 'Day 25', 'Day 30'],
+            labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
             datasets: [
                 {
-                    data: [86, 500, 200, 886, 1500, 800, 500],
+                    data: {{ views_list }},
                     label: 'Monthly Visits',
                     borderColor: '#3e95cd',
                     fill: false,
