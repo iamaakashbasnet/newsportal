@@ -5,7 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>
+      {% if title %}
+        {{ title }}
+      {% else %}
+        NewsPortal
+      {% endif %}
+    </title>
     <link rel="stylesheet" href="{% static 'dist/bundle.css' %}" />
   </head>
   <body>
@@ -53,16 +59,13 @@
             <a href="{% url 'dashboard' %}" class="list-group-item bg-dark text-white sidebar-item">
               Dashboard</a
             >
-            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
+            <a href="{% url 'manage-category' %}" class="list-group-item bg-dark text-white sidebar-item"
               >Manage Category</a
             >
-            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
+            <a href="{% url 'manage-news' %}" class="list-group-item bg-dark text-white sidebar-item"
               >Manage News</a
             >
-            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
-              >Manage Users</a
-            >
-            <a href="#" class="list-group-item bg-dark text-white sidebar-item"
+            <a href="{% url 'trash' %}" class="list-group-item bg-dark text-white sidebar-item"
               >Trash</a
             >
           {% else %}
@@ -76,7 +79,6 @@
       <!-- Page Content -->
       <div id="page-content-wrapper" class="mt-2">
         <div class="container-fluid">
-          {% block login %}{% endblock login %}
           {% block dashboard %}{% endblock dashboard %}
         </div>
       </div>
