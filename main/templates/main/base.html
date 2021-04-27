@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% if title %}
+        {{ title }}
+      {% else %}
+        NewsPortal
+      {% endif %}
+    </title>
+    <link rel="stylesheet" href="{% static 'dist/bundle.css' %}" />
+  </head>
+  <body>
+    <header class="py-3 mb-3 border-bottom">
+      <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle" id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="block" src="{% static 'logo.svg' %}" width="30" height="30" />
+          </a>
+          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
+            <li><a class="dropdown-item active" href="#">Latest News</a></li>
+            <li><a class="dropdown-item" href="#">Inventory</a></li>
+          </ul>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <form class="w-100">
+            <input type="search" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </header>
+    {% block content %}{% endblock content %}
+    <script src="{% static 'dist/bundle.js' %}"></script>
+    {% block extrajs %}{% endblock extrajs %}
+  </body>
+</html>

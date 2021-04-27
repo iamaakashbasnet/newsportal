@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'taggit',
     'debug_toolbar',
     'accounts',
-    'posts'
+    'posts',
+    'main',
 ]
 
 MIDDLEWARE = [

@@ -24,6 +24,7 @@ urlpatterns = [
     path('sudo/', admin.site.urls),
     path('admin/', include('accounts.urls')),
     path('views-manager/', include('posts.urls')),
+    path('', include('main.urls')),
 ]
 
 if settings.DEBUG:
