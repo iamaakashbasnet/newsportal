@@ -1,18 +1,38 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.template.defaultfilters import slugify
+from django.urls import reverse
+from django.contrib.auth import get_user_model
 from taggit.managers import TaggableManager
+from PIL import Image
+
+User = get_user_model()
 
 
 class Post(models.Model):
     title = models.CharField(max_length=60, blank=False, null=False)
-    intro_desc = models.TextField(max_length=120, blank=True)
     desc = models.TextField()
     tags = TaggableManager()
+    post_img = models.ImageField(upload_to='posts_img', null=True)
+    date_posted = models.DateField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     deleted = models.BooleanField(blank=False, null=False, default=False)
+    slug = models.SlugField(max_length=50, null=True, blank=True, unique=True)
 
     def save(self, *args, **kwargs):
-        self.intro_desc = self.desc[:110] + '...'
+        if not self.slug:
+            self.slug = slugify(self.title)
+
+        img = Image.open(self.post_img.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
         super(Post, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('news-detail', kwargs={'slug': self.slug})
 
     def __str__(self) -> str:
         return self.title

@@ -77,3 +77,13 @@ body {
 .form-group {
   margin: 1.5rem 0;
 }
+
+.category-anchor {
+  text-decoration: none;
+
+  &:hover {
+    & * {
+      background: #f4f4f4;
+    }
+  }
+}

@@ -18,7 +18,7 @@
   <body class="main">
     <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border-bottom">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url 'home' %}">
           <img src="{% static 'logo.svg' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
           NewsPortal
         </a>
@@ -28,10 +28,10 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav ms-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Latest News</a>
+              <a class="nav-link text-dark" href="{% url 'home' %}">Latest News</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About Us</a>
+              <a class="nav-link text-dark" href="#">About Us</a>
             </li>
           </ul>
         </div>
@@ -62,9 +62,11 @@
               Categories
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">An item</li>
-              <li class="list-group-item">A second item</li>
-              <li class="list-group-item">A third item</li>
+              {% for category in categories %}
+                <a class="category-anchor" href="{% url 'category' category.slug %}">
+                  <li class="list-group-item">{{ category }}</li>
+                </a>
+              {% endfor %}
             </ul>
           </div>
         </div>
@@ -73,7 +75,6 @@
     <footer class="bg-light mt-5 px-2 py-5 text-center border-top">
       <small class="fw-bold">an Aakash Basnet Production</small>
     </footer>
-    {% block content %}{% endblock content %}
     <script src="{% static 'dist/bundle.js' %}"></script>
     {% block extrajs %}{% endblock extrajs %}
   </body>

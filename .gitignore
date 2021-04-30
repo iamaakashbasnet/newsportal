@@ -12,3 +12,6 @@ db.sqlite3
 
 # NPM
 node_modules
+
+# Media files
+media/posts_img/

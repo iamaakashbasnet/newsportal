@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block news_list %}
+    <h1>{{ post.title }}</h1>
+    <small class="text-muted">By {{ post.author.first_name }} {{ post.author.last_name }} on {{ post.date_posted }}</small>
+    <div>
+        {% for tag in object.tags.all %}
+            <span class="badge bg-light text-dark">{{ tag }}</span>
+        {% endfor %}
+    </div>
+    <img class="img-fluid rounded py-2" src="{{ post.post_img.url }}" />
+    <p>{{ post.desc|linebreaks }}</p>
+{% endblock news_list %}
