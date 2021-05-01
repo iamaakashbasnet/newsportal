@@ -31,7 +31,7 @@
               <a class="nav-link text-dark" href="{% url 'home' %}">Latest News</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark" href="#">About Us</a>
+              <a class="nav-link text-dark" href="{% url 'about' %}">About Us</a>
             </li>
           </ul>
         </div>
@@ -48,12 +48,13 @@
               Search
             </div>
             <div class="card-body">
-              <form>
+              <form action="{% url 'search' %}" method="POST">
+                {% csrf_token %}
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Enter query here..." />
+                  <input type="text" name="q" class="form-control" placeholder="Enter query here..." />
                 </div>
+                <button type="submit" class="btn btn-primary">Search</button>
               </form>
-              <a href="#" class="btn btn-primary">Search</a>
             </div>
           </div>
 

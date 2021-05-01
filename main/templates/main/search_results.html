@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block news_list %}
+    <h3 class="mb-3">Search results for "{{ q }}"</h3>
+
+    {% if not results %}
+        <div class="text-center">
+            <small>No results</small>
+        </div>
+    {% endif %}
+
+    {% for result in results %}
+        <div class="card mb-3">
+            <img src="{{ result.post_img.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ result.title }}</h5>
+                <p class="card-text text-black-50">{{ result.desc|truncatechars:150 }}</p>
+                <a href="{{ result.get_absolute_url }}"><small>Read more...</small></a>
+                <p class="card-text"><small class="text-muted">{{ result.date_posted }}</small></p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock news_list %}

@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.http.response import HttpResponse
+from django.http.response import JsonResponse
 from .models import ViewCounter
 
 
@@ -14,7 +14,10 @@ def views_counter_manager(request):
             ViewCounter.objects.all().update(views=0)
 
     db_day = ViewCounter.objects.get(day=current_day)
+    db_day.views = 1
     db_day.views += 1
     db_day.save()
 
-    return HttpResponse('Updated!')
+    return JsonResponse(
+        {'status': 'Updated!'}
+    )

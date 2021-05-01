@@ -8,6 +8,14 @@
             <span class="badge bg-light text-dark">{{ tag }}</span>
         {% endfor %}
     </div>
-    <img class="img-fluid rounded py-2" src="{{ post.post_img.url }}" />
+    <img class="w-100 img-fluid rounded py-2" src="{{ post.post_img.url }}" />
     <p>{{ post.desc|linebreaks }}</p>
 {% endblock news_list %}
+
+{% block extrajs %}
+<script>
+    fetch('/views-manager/')
+    .then((res)=> res.json())
+    .catch((err) => console.log('Something went wrong!'))
+</script>
+{% endblock extrajs %}

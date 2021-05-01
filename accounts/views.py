@@ -106,7 +106,7 @@ class NewsCreateView(LoginRequiredMixin, CreateView):
 
 class NewsUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'desc', 'tags']
+    fields = ['title', 'desc', 'tags', 'post_img']
     template_name = 'accounts/news-manager/update_news.html'
     success_url = reverse_lazy('manage-news')
 

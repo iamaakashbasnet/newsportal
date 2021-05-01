@@ -13,7 +13,7 @@ class Post(models.Model):
     title = models.CharField(max_length=60, blank=False, null=False)
     desc = models.TextField()
     tags = TaggableManager()
-    post_img = models.ImageField(upload_to='posts_img', null=True)
+    post_img = models.ImageField(upload_to='posts_img', null=True, blank=True)
     date_posted = models.DateField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     deleted = models.BooleanField(blank=False, null=False, default=False)
@@ -23,11 +23,12 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
 
-        img = Image.open(self.post_img.path)
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+        if self.post_img:
+            img = Image.open(self.post_img.path)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.post_img.path)
 
         super(Post, self).save(*args, **kwargs)
 
